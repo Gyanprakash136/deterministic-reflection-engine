@@ -185,9 +185,19 @@ def main():
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("""
+    # Logo handling with base64 for reliability
+    import base64
+    logo_path = os.path.join(os.path.dirname(__file__), 'logo.png')
+    if os.path.exists(logo_path):
+        with open(logo_path, "rb") as f:
+            data = base64.b64encode(f.read()).decode("utf-8")
+            logo_html = f'<img src="data:image/png;base64,{data}" style="width: 80px; filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.5));" />'
+    else:
+        logo_html = '<img src="https://img.icons8.com/color/96/tree--v1.png" style="width: 80px;" />'
+
+    st.markdown(f"""
         <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
-            <img src="https://img.icons8.com/color/96/tree--v1.png" style="width: 80px; filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.5));" />
+            {logo_html}
         </div>
     """, unsafe_allow_html=True)
     st.markdown("<h1>The Daily Reflection Tree</h1>", unsafe_allow_html=True)
