@@ -1,7 +1,7 @@
 # The Daily Reflection Tree
 **A Deterministic Engine for Guided Self-Observation and Behavioral Growth**
 
-This project is a submission for the **DeepThought Fellowship**. It demonstrates a robust, deterministic approach to knowledge engineering—transforming complex organizational psychology into a navigable, auditable decision tree.
+This repository contains the architecture and implementation for a deterministic reflection tool, designed to map organizational psychology onto a navigable decision tree.
 
 ## Project Structure
 - `/tree/`: Contains the structured data and design documents.
