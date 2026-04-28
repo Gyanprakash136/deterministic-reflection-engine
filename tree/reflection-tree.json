@@ -1,0 +1,255 @@
+{
+  "nodes": [
+    {
+      "id": "START",
+      "parentId": null,
+      "type": "start",
+      "text": "Good evening. The day is behind you now. Let's take a moment to see how you moved through it.",
+      "next": "A1_OPEN"
+    },
+    {
+      "id": "A1_OPEN",
+      "parentId": "START",
+      "type": "question",
+      "text": "If you had to describe the 'weather' of your workday today, what would it be?",
+      "options": [
+        { "text": "Clear and Sunny (Productive)", "value": "productive" },
+        { "text": "Stormy (Challenging)", "value": "stormy" },
+        { "text": "Foggy (Uncertain/Slow)", "value": "foggy" },
+        { "text": "Changing Winds (Mixed)", "value": "mixed" }
+      ],
+      "next": "A1_D1"
+    },
+    {
+      "id": "A1_D1",
+      "parentId": "A1_OPEN",
+      "type": "decision",
+      "logic": {
+        "conditions": [
+          { "if": "A1_OPEN.value == 'productive' || A1_OPEN.value == 'mixed'", "then": "A1_Q_AGENCY_HIGH" },
+          { "if": "A1_OPEN.value == 'stormy' || A1_OPEN.value == 'foggy'", "then": "A1_Q_AGENCY_LOW" }
+        ]
+      }
+    },
+    {
+      "id": "A1_Q_AGENCY_HIGH",
+      "parentId": "A1_D1",
+      "type": "question",
+      "text": "You felt today was {A1_OPEN.text}. When things were moving well, what role did you play in that momentum?",
+      "options": [
+        { "text": "I set a clear intention and followed through", "value": "intention", "signal": "axis1:internal" },
+        { "text": "I reacted quickly to opportunities", "value": "reaction", "signal": "axis1:internal" },
+        { "text": "I mostly stayed out of the way of a good flow", "value": "flow", "signal": "axis1:external" },
+        { "text": "It felt like luck or good timing", "value": "luck", "signal": "axis1:external" }
+      ],
+      "next": "A1_Q_AGENCY_HIGH_FOLLOWUP"
+    },
+    {
+      "id": "A1_Q_AGENCY_HIGH_FOLLOWUP",
+      "parentId": "A1_Q_AGENCY_HIGH",
+      "type": "question",
+      "text": "Even in a good flow, there's a choice. Did you push for more, or savor the ease?",
+      "options": [
+        { "text": "I pushed to maximize the output", "value": "pushed", "signal": "axis1:internal" },
+        { "text": "I savored the ease and stayed steady", "value": "savored", "signal": "axis1:internal" },
+        { "text": "I worried it wouldn't last", "value": "worried", "signal": "axis1:external" }
+      ],
+      "next": "A1_R1"
+    },
+    {
+      "id": "A1_Q_AGENCY_LOW",
+      "parentId": "A1_D1",
+      "type": "question",
+      "text": "Today felt {A1_OPEN.text}. When the 'weather' turned, where did your focus go first?",
+      "options": [
+        { "text": "To what I could immediately fix or change", "value": "fix", "signal": "axis1:internal" },
+        { "text": "To the external factors causing the friction", "value": "external", "signal": "axis1:external" },
+        { "text": "To how this was affecting my personal plans", "value": "self", "signal": "axis1:external" },
+        { "text": "I looked for who was responsible", "value": "blame", "signal": "axis1:external" }
+      ],
+      "next": "A1_Q_AGENCY_LOW_FOLLOWUP"
+    },
+    {
+      "id": "A1_Q_AGENCY_LOW_FOLLOWUP",
+      "parentId": "A1_Q_AGENCY_LOW",
+      "type": "question",
+      "text": "In that moment of friction, did you feel like a participant or a spectator?",
+      "options": [
+        { "text": "A participant trying to navigate", "value": "participant", "signal": "axis1:internal" },
+        { "text": "A spectator watching it happen", "value": "spectator", "signal": "axis1:external" },
+        { "text": "A target of the circumstances", "value": "target", "signal": "axis1:external" }
+      ],
+      "next": "A1_R1"
+    },
+    {
+      "id": "A1_R1",
+      "parentId": "A1_Q_AGENCY_HIGH_FOLLOWUP",
+      "type": "reflection",
+      "text": "Agency isn't about controlling the weather; it's about how you pilot the ship. You noticed {A1_Q_AGENCY_HIGH.value || A1_Q_AGENCY_LOW.value} as your primary mode. That's your locus of control in action.",
+      "next": "BRIDGE_1_2"
+    },
+    {
+      "id": "BRIDGE_1_2",
+      "parentId": "A1_R1",
+      "type": "bridge",
+      "text": "Now, let's shift from how you navigated the day to what you actually put into it.",
+      "next": "A2_OPEN"
+    },
+    {
+      "id": "A2_OPEN",
+      "parentId": "BRIDGE_1_2",
+      "type": "question",
+      "text": "Think of your energy today as a currency. How did you spend most of it?",
+      "options": [
+        { "text": "Investing in others (helping, teaching, supporting)", "value": "investing", "signal": "axis2:contribution" },
+        { "text": "Securing my own outputs (focusing strictly on my tasks)", "value": "securing", "signal": "axis2:contribution" },
+        { "text": "Protecting myself from interruptions/demands", "value": "protecting", "signal": "axis2:entitlement" },
+        { "text": "Waiting for the resources I was promised", "value": "waiting", "signal": "axis2:entitlement" }
+      ],
+      "next": "A2_Q2"
+    },
+    {
+      "id": "A2_Q2",
+      "parentId": "A2_OPEN",
+      "type": "question",
+      "text": "Was there a moment today where you felt you deserved more than what you received (credit, time, help)?",
+      "options": [
+        { "text": "Yes, I felt my contribution wasn't fully recognized", "value": "yes_unrecognized", "signal": "axis2:entitlement" },
+        { "text": "A little, but I moved past it", "value": "little", "signal": "axis2:contribution" },
+        { "text": "No, I was focused on the work itself", "value": "no_focus", "signal": "axis2:contribution" },
+        { "text": "I felt I gave less than I could have", "value": "gave_less", "signal": "axis2:contribution" }
+      ],
+      "next": "A2_Q3"
+    },
+    {
+      "id": "A2_Q3",
+      "parentId": "A2_Q2",
+      "type": "question",
+      "text": "When you think about your team's success today, how much of it felt like 'your' win versus 'their' responsibility?",
+      "options": [
+        { "text": "I felt responsible for helping everyone win", "value": "all_win", "signal": "axis2:contribution" },
+        { "text": "I did my part; the rest was on them", "value": "my_part", "signal": "axis2:contribution" },
+        { "text": "I felt they owed me more support", "value": "owed_support", "signal": "axis2:entitlement" }
+      ],
+      "next": "A2_D1"
+    },
+    {
+      "id": "A2_D1",
+      "parentId": "A2_Q3",
+      "type": "decision",
+      "logic": {
+        "conditions": [
+          { "if": "state.axis2.contribution > state.axis2.entitlement", "then": "A2_R_CONTRIB" },
+          { "if": "state.axis2.entitlement >= state.axis2.contribution", "then": "A2_R_ENTITLE" }
+        ]
+      }
+    },
+    {
+      "id": "A2_R_CONTRIB",
+      "parentId": "A2_D1",
+      "type": "reflection",
+      "text": "You operated from a place of contribution today. When we focus on what we give, we build 'Organizational Citizenship'—the invisible glue that makes teams work.",
+      "next": "BRIDGE_2_3"
+    },
+    {
+      "id": "A2_R_ENTITLE",
+      "parentId": "A2_D1",
+      "type": "reflection",
+      "text": "It's natural to feel like the scale is unbalanced sometimes. Entitlement is often just a shield for feeling undervalued. Recognizing it is the first step toward reclaiming your power to give.",
+      "next": "BRIDGE_2_3"
+    },
+    {
+      "id": "BRIDGE_2_3",
+      "parentId": "A2_R_CONTRIB",
+      "type": "bridge",
+      "text": "Finally, let's look at the 'radius' of your concern. How wide was your world today?",
+      "next": "A3_OPEN"
+    },
+    {
+      "id": "A3_OPEN",
+      "parentId": "BRIDGE_2_3",
+      "type": "question",
+      "text": "When you encountered a challenge today, who was in the frame of your thoughts?",
+      "options": [
+        { "text": "Mostly me—how it affected my stress and my goals", "value": "me", "signal": "axis3:self" },
+        { "text": "Me and my immediate teammates", "value": "team", "signal": "axis3:altro" },
+        { "text": "The end user or the mission of the company", "value": "mission", "signal": "axis3:altro" },
+        { "text": "Someone else who was struggling more than me", "value": "other_struggle", "signal": "axis3:altro" }
+      ],
+      "next": "A3_Q2"
+    },
+    {
+      "id": "A3_Q2",
+      "parentId": "A3_OPEN",
+      "type": "question",
+      "text": "If you could change one person's experience of today (besides your own), who would it be?",
+      "options": [
+        { "text": "A colleague who seemed overwhelmed", "value": "colleague", "signal": "axis3:altro" },
+        { "text": "A customer who didn't get what they needed", "value": "customer", "signal": "axis3:altro" },
+        { "text": "My manager, to make their job easier", "value": "manager", "signal": "axis3:altro" },
+        { "text": "I didn't really think about others' experiences today", "value": "none", "signal": "axis3:self" }
+      ],
+      "next": "A3_Q3"
+    },
+    {
+      "id": "A3_Q3",
+      "parentId": "A3_Q2",
+      "type": "question",
+      "text": "When you think about the impact of your work today, where does the ripple end?",
+      "options": [
+        { "text": "With my own completion of tasks", "value": "task", "signal": "axis3:self" },
+        { "text": "With my team's progress", "value": "team", "signal": "axis3:altro" },
+        { "text": "With the person who eventually uses what I built", "value": "user", "signal": "axis3:altro" }
+      ],
+      "next": "A3_D1"
+    },
+    {
+      "id": "A3_D1",
+      "parentId": "A3_Q3",
+      "type": "decision",
+      "logic": {
+        "conditions": [
+          { "if": "state.axis3.altro > state.axis3.self", "then": "A3_R_ALTRO" },
+          { "if": "state.axis3.self >= state.axis3.altro", "then": "A3_R_SELF" }
+        ]
+      }
+    },
+    {
+      "id": "A3_R_ALTRO",
+      "parentId": "A3_D1",
+      "type": "reflection",
+      "text": "You've practiced 'Self-Transcendence' today. By looking beyond yourself, you contextalize your own challenges and find a deeper sense of purpose.",
+      "next": "SUMMARY_D"
+    },
+    {
+      "id": "A3_R_SELF",
+      "parentId": "A3_D1",
+      "type": "reflection",
+      "text": "A narrow radius is often a survival mechanism for a high-stress day. But even a small shift outward—noticing a teammate's effort—can break the cycle of self-centered stress.",
+      "next": "SUMMARY_D"
+    },
+    {
+      "id": "SUMMARY_D",
+      "parentId": "A3_R_ALTRO",
+      "type": "decision",
+      "logic": {
+        "conditions": [
+          { "if": "true", "then": "SUMMARY" }
+        ]
+      }
+    },
+    {
+      "id": "SUMMARY",
+      "parentId": "SUMMARY_D",
+      "type": "summary",
+      "text": "Reflection Complete. Today, you navigated with {axis1.dominant} agency, showed a {axis2.dominant} orientation, and maintained a {axis3.dominant} radius of concern.",
+      "next": "END"
+    },
+    {
+      "id": "END",
+      "parentId": "SUMMARY",
+      "type": "end",
+      "text": "Rest well. Tomorrow is a new day to choose how you show up."
+    }
+  ]
+}
