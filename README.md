@@ -1,6 +1,7 @@
 # The Daily Reflection Tree
+**A Deterministic Engine for Guided Self-Observation and Behavioral Growth**
 
-A deterministic reflection agent designed to move employees through three psychological axes: **Locus of Control**, **Contribution Orientation**, and **Radius of Concern**.
+This project is a submission for the **DeepThought Fellowship**. It demonstrates a robust, deterministic approach to knowledge engineering—transforming complex organizational psychology into a navigable, auditable decision tree.
 
 ## Project Structure
 - `/tree/`: Contains the structured data and design documents.
